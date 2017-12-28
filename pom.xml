@@ -3,15 +3,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.biayna</groupId>
-	<artifactId>biayna-bi-01</artifactId>
+	<artifactId>biayna-bi</artifactId>
+	<version>01</version>
 	<packaging>war</packaging>
-	<version>0.1</version>
 
 	<name>biayna-bi-maven-webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>1.8</jdk.version>
 		<spring.version>4.3.12.RELEASE</spring.version>
 		<junit.version>4.12</junit.version>
 		<jstl.version>1.2</jstl.version>
@@ -100,7 +101,7 @@
 
 	</dependencies>
 	<build>
-		<finalName>biayna-bi-01</finalName>
+		<finalName>biayna-bi</finalName>
 	</build>
 </project>
 
