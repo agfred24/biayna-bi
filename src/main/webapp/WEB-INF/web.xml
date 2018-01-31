@@ -17,6 +17,13 @@
 			<param-value>/WEB-INF/bi-dispatcher.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		
+		<multipart-config>
+			<max-file-size>10485760</max-file-size> <!-- 10GB -->
+			<max-request-size>20971520</max-request-size> <!-- 20GB -->
+			<file-size-threshold>5242880</file-size-threshold> <!-- 5GB -->
+		</multipart-config> 
+		
 	</servlet>
 
 	<!-- Step 2: Set up URL mapping for Spring MVC Dispatcher Servlet -->
