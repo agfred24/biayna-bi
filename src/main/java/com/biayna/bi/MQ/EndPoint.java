@@ -6,6 +6,7 @@ import java.util.concurrent.TimeoutException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.biayna.bi.common.utility.ReadConfiguration;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -26,17 +27,26 @@ public abstract class EndPoint {
 	
 	public EndPoint(String endpointName) throws IOException, TimeoutException {
 		this.endPointName = endpointName;
+		
+		ReadConfiguration objPropertiesFile = new ReadConfiguration();
 
 		// Create a connection factory
 		ConnectionFactory factory = new ConnectionFactory();
 
 		// hostname of your rabbitmq server
-		factory.setHost("localhost");
-
-		factory.setUsername("guest");
-		factory.setPassword("guest");
-		// factory.setPort(15672);
-
+		String hostName = objPropertiesFile.readKey("rabbitmq.properties", "host");
+		String userName = objPropertiesFile.readKey("rabbitmq.properties", "username");
+		String password = objPropertiesFile.readKey("rabbitmq.properties", "password");
+		
+		if (hostName != null && userName != null && password != null) {
+			factory.setHost(hostName);
+			factory.setUsername(userName);
+			factory.setPassword(password);
+			// factory.setPort(15672);
+		} else {
+			// throws network error
+		}
+		
 		// getting a connection
 		connection = factory.newConnection();
 

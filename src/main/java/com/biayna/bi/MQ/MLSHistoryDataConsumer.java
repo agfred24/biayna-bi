@@ -12,6 +12,8 @@ import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
 
+import com.biayna.bi.services.HistoricDataProcessor;
+
 /**
  * The MLS History Data Consumer consumes messages off of the history data consumer queue.
  * This class extends EndPoint abstract class and implements com.rabbitmq.client.Consumer
@@ -81,11 +83,15 @@ public class MLSHistoryDataConsumer extends EndPoint implements Consumer {
 		}
 	}
 	
-	private boolean processMessage(byte[] body){
+	private boolean processMessage(byte[] body) throws IOException{
 		MLSHistoryDataFileInfo fileInfo = (MLSHistoryDataFileInfo) SerializationUtils.deserialize(body);
 		logger.info("Consumer Processing File Path: " + fileInfo.getPath());
 		logger.info("Consumer Processing File Name: " + fileInfo.getName());
-		return true;
+		HistoricDataProcessor dataProcessor = new HistoricDataProcessor(fileInfo);
+		if (dataProcessor.processHistoricData()) {
+			return true;
+		}
+		return false;
 	}
 
 	public void handleCancel(String consumerTag) {

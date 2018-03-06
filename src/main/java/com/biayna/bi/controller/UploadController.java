@@ -2,6 +2,8 @@ package com.biayna.bi.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeoutException;
 
 import javax.servlet.ServletException;
@@ -66,8 +68,21 @@ public class UploadController {
 		//String contextPath = context.getRealPath("/WEB-INF");
 		//logger.info(contextPath);
 		
+		long systemCurrentmilliseconds = System.currentTimeMillis();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd-HH.mm.s.S.Z");    
+		Date uploadDate = new Date(systemCurrentmilliseconds);
+		String currSystemDateTime = sdf.format(uploadDate);
+		
 		String fileName = multipartFile.getOriginalFilename(); //extracting the file name
-		String path = uploadFilePath + File.separator + fileName;
+		int extensionPos = fileName.lastIndexOf(".");
+		String newFileNameNoExt = (extensionPos == -1) ? fileName : fileName.substring(0, extensionPos);
+		String extension = (extensionPos == -1) ? "" : fileName.substring(extensionPos, fileName.length());
+		
+		// We're creating new file names by concatenating the system mills to not override the files
+		String newFileName = newFileNameNoExt + currSystemDateTime + extension;
+		
+		String path = uploadFilePath + File.separator + newFileName;
+		logger.info("Uploaded time: " + currSystemDateTime); 
 		logger.info("Uploaded filename: " + fileName); 
 		logger.info("Uploaded filepath: " + path);
 		
