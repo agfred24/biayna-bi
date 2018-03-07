@@ -17,6 +17,8 @@ public class Address{
 	private String mlsArea;
 	private String mlsAreaCode;
 	
+	public Address() {}
+	
 	public Address(String[] addressLine, String city, String county, String state, String zipcode, String mlsArea,
 			String mlsAreaCode) {
 		super();

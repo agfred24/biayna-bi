@@ -11,7 +11,7 @@ import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
-
+import com.biayna.bi.common.exceptions.NetworkException;
 import com.biayna.bi.services.HistoricDataProcessor;
 
 /**
@@ -29,12 +29,15 @@ public class MLSHistoryDataConsumer extends EndPoint implements Consumer {
 	private static Logger logger = LogManager.getLogger();
 	
 	/**
-	 *  The constructor is private since this class is Singleton.
-	 *  With the Singleton design pattern you can:
+	 * The constructor is private since this class is Singleton.
+	 * With the Singleton design pattern you can:
 	 *  	Ensure that only one instance of a class is created
-	 *  	Provide a global point of access to the object
+	 * 		Provide a global point of access to the object
+	 * @throws IOException
+	 * @throws TimeoutException
+	 * @throws NetworkException 
 	 */	
-	private MLSHistoryDataConsumer() throws IOException, TimeoutException {
+	private MLSHistoryDataConsumer() throws IOException, TimeoutException, NetworkException {
 		super(endPointName);
 	}
 	
@@ -43,8 +46,9 @@ public class MLSHistoryDataConsumer extends EndPoint implements Consumer {
 	 * starts the consumer to start receiving messages.
 	 * @throws IOException
 	 * @throws TimeoutException
+	 * @throws NetworkException 
 	 */
-	public static void getInstance() throws IOException, TimeoutException {
+	public static void getInstance() throws IOException, TimeoutException, NetworkException {
 		if (instance == null) {
 			instance = new MLSHistoryDataConsumer();
 			instance.receiveMessage();

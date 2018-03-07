@@ -6,6 +6,8 @@ import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.SerializationUtils;
 
+import com.biayna.bi.common.exceptions.NetworkException;
+
 /**
  * The MLS History Data Producer produces messages to the history data consumer queue.
  * This class extends EndPoint abstract class
@@ -15,7 +17,7 @@ import org.apache.commons.lang.SerializationUtils;
  */
 public class Publisher extends EndPoint{
 	
-	public Publisher(String endPointName) throws IOException, TimeoutException{
+	public Publisher(String endPointName) throws IOException, TimeoutException, NetworkException{
 		super(endPointName);
 	}
 

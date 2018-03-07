@@ -38,7 +38,7 @@ public class ReadConfiguration {
                 /* Load file into commonProperties */
                 commonProperties.load(objFileInputStream);
                 /* Get the value of key */
-                return String.valueOf(commonProperties.get(key));            
+                return commonProperties.getProperty(key);            
             } catch (IOException ex) {
                 ex.printStackTrace();
             } catch (URISyntaxException e) {

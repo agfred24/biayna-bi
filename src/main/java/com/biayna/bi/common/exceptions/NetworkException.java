@@ -17,15 +17,14 @@ public class NetworkException extends Exception {
 		/**
 		 * Validation errors when required values are not provided.
 		 */
-		ACCOUNT_VALUES_NOT_SET("Account values are not available!"),
-		ENTRY_CONTAINS_NO_PIPE("Account entry does not contain pipe delimiter!"),
-		HOST_AND_FOREIGN_KEYS_ARE_MISSING("Host name and Foreign keys are missing!");
+		NETWORK_PARAMETERS_INCOMPLETE("One of these parameters are missing: host, username or password.");
+		/*ENTRY_CONTAINS_NO_PIPE("Account entry does not contain pipe delimiter!"),
+		HOST_AND_FOREIGN_KEYS_ARE_MISSING("Host name and Foreign keys are missing!");*/
 
 		private final String message;
 
 		/**
 		 * Used to initialize the enumerator by its error message.
-		 * 
 		 * @param message denoting the type of error.
 		 */
 		NetworkExceptionMessages(final String message) {
@@ -34,7 +33,6 @@ public class NetworkException extends Exception {
 
 		/**
 		 * Returns the enumeration code.
-		 * 
 		 * @return error message.
 		 */
 		public String getMessage() {
@@ -52,7 +50,7 @@ public class NetworkException extends Exception {
 	}
 	
 	public NetworkException(final String desc, final NetworkExceptionMessages type) {
-		super(desc);
+		super(desc+type.getMessage());
 		this.type = type;
 	}
 
@@ -69,6 +67,5 @@ public class NetworkException extends Exception {
 	public void setType(NetworkExceptionMessages type) {
 		this.type = type;
 	}
-	
 	
 }

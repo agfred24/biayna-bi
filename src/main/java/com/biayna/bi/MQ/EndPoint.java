@@ -6,10 +6,13 @@ import java.util.concurrent.TimeoutException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.biayna.bi.common.exceptions.NetworkException;
+import com.biayna.bi.common.exceptions.NetworkException.NetworkExceptionMessages;
 import com.biayna.bi.common.utility.ReadConfiguration;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+
 
 /**
  * The EndPoint is an abstract base class to establish a new connection, 
@@ -25,7 +28,7 @@ public abstract class EndPoint {
 	
 	private static Logger logger = LogManager.getLogger();
 	
-	public EndPoint(String endpointName) throws IOException, TimeoutException {
+	public EndPoint(String endpointName) throws IOException, TimeoutException, NetworkException {
 		this.endPointName = endpointName;
 		
 		ReadConfiguration objPropertiesFile = new ReadConfiguration();
@@ -44,7 +47,7 @@ public abstract class EndPoint {
 			factory.setPassword(password);
 			// factory.setPort(15672);
 		} else {
-			// throws network error
+			throw new NetworkException("Error Construct EndPoint(String endpointName): ", NetworkExceptionMessages.NETWORK_PARAMETERS_INCOMPLETE);
 		}
 		
 		// getting a connection

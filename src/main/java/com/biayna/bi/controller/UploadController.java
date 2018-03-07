@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.biayna.bi.MQ.MLSHistoryDataConsumer;
 import com.biayna.bi.MQ.MLSHistoryDataFileInfo;
 import com.biayna.bi.MQ.Publisher;
+import com.biayna.bi.common.exceptions.NetworkException;
 
 /**
  * The Upload Controller maps two requests: 
@@ -43,7 +44,7 @@ public class UploadController {
 	}
 	
 	@RequestMapping(path="/uploadProcess", method=RequestMethod.POST)
-	public String processFileUpload(@RequestParam("userFile") MultipartFile multipartFile, Model model, HttpServletRequest request) throws IOException, ServletException, TimeoutException{
+	public String processFileUpload(@RequestParam("userFile") MultipartFile multipartFile, Model model, HttpServletRequest request) throws IOException, ServletException, TimeoutException, NetworkException{
 		
 		// gets absolute path of the web application
 		String applicationPath = request.getServletContext().getRealPath("");

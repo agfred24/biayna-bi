@@ -21,6 +21,8 @@ public class PropertyDetails {
 	private int salePrice;
 	private float pricePerSquareFoot;
 	
+	public PropertyDetails () {}
+	
 	public PropertyDetails(int lotSize, int structureSize, float structureCoveragePercentage, HouseTypes type,
 			LocalDate yearBuilt, LocalDate soldDate, int soldPrice, int salePrice, float pricePerSquareFoot) {
 		super();
