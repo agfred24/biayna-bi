@@ -2,8 +2,6 @@ package com.biayna.bi.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.TimeoutException;
 
 import javax.servlet.ServletException;
@@ -23,6 +21,7 @@ import com.biayna.bi.MQ.MLSHistoryDataConsumer;
 import com.biayna.bi.MQ.MLSHistoryDataFileInfo;
 import com.biayna.bi.MQ.Publisher;
 import com.biayna.bi.common.exceptions.NetworkException;
+import com.biayna.bi.common.utility.SystemTime;
 
 /**
  * The Upload Controller maps two requests: 
@@ -69,10 +68,7 @@ public class UploadController {
 		//String contextPath = context.getRealPath("/WEB-INF");
 		//logger.info(contextPath);
 		
-		long systemCurrentmilliseconds = System.currentTimeMillis();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd-HH.mm.s.S.Z");    
-		Date uploadDate = new Date(systemCurrentmilliseconds);
-		String currSystemDateTime = sdf.format(uploadDate);
+		String currSystemDateTime = SystemTime.getCurrentSystemTime();
 		
 		String fileName = multipartFile.getOriginalFilename(); //extracting the file name
 		int extensionPos = fileName.lastIndexOf(".");
@@ -84,7 +80,7 @@ public class UploadController {
 		
 		String path = uploadFilePath + File.separator + newFileName;
 		logger.info("Uploaded time: " + currSystemDateTime); 
-		logger.info("Uploaded filename: " + fileName); 
+		logger.info("Original Uploaded filename: " + fileName); 
 		logger.info("Uploaded filepath: " + path);
 		
 		 //Iterating the parts received from 'multipart/form-data' request

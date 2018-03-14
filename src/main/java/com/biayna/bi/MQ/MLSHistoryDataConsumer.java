@@ -95,6 +95,7 @@ public class MLSHistoryDataConsumer extends EndPoint implements Consumer {
 		if (dataProcessor.processHistoricData()) {
 			return true;
 		}
+		logger.info("Consumer cannot process the file, Processing File Path: Requeue " + fileInfo.getPath());
 		return false;
 	}
 

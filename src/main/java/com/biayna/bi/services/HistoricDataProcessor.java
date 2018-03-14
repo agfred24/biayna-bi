@@ -51,13 +51,18 @@ public class HistoricDataProcessor {
 					listings.add(listing);
 					//rows = stream.i
 */				System.out.println(s);
+				
 								
 			});
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 
-		
+		EmailService emailService = new EmailServiceImpl();
+		//String emialMessage = emailService.writeEmailMessage("hello");
+		emailService.setProcessedFileName(fileInfo.getName());
+		emailService.setSubject("File has been processed.");
+		emailService.sendMail();
 		return true;
 	}
 }
