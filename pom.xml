@@ -19,8 +19,8 @@
 		<jsp.version>2.3.1</jsp.version>
 		<servlet.version>3.1.0</servlet.version>
 		<javax.mail.version>1.6.1</javax.mail.version>
-		<mysql.connector.version>6.0.5</mysql.connector.version>
-		<hibernate.version>5.2.6.Final</hibernate.version>
+		<mysql.connector.version>8.0.9-rc</mysql.connector.version>
+		<hibernate.version>5.2.15.Final</hibernate.version>
 		<log4j.core.version>2.9.1</log4j.core.version>
 		<log4j.api.version>2.9.1</log4j.api.version>
 		<commons.lang.version>2.6</commons.lang.version>
@@ -83,7 +83,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.connector.version}</version>
 		</dependency>
-		<!-- Hibernate 5.2.6 Final -->
+		<!-- Hibernate 5.2.15 Final -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
