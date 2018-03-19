@@ -20,7 +20,7 @@ public class HistoricDataProcessor {
 		this.fileInfo = fileInfo;
 	}	
 	
-	public boolean processHistoricData() throws IOException {
+	public boolean processHistoricData() {
 		Path path = Paths.get(fileInfo.getPath());
 		HashMap<Integer, String> headerNumberMap = new HashMap<>();
 		HashSet<Listing> listings = new HashSet<>();
@@ -60,8 +60,10 @@ public class HistoricDataProcessor {
 
 		EmailService emailService = new EmailServiceImpl();
 		//String emialMessage = emailService.writeEmailMessage("hello");
-		emailService.setProcessedFileName(fileInfo.getName());
-		emailService.setSubject("File has been processed.");
+		String successMessage = "The uploaded file \"" + fileInfo.getName() + "\" has been processed and data has been stored successfully.";
+		String successSubject = "File has been processed.";
+		emailService.setProcessedFileName(successMessage);
+		emailService.setSubject(successSubject);
 		emailService.sendMail();
 		return true;
 	}

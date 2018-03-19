@@ -55,7 +55,13 @@ public abstract class EndPoint {
 
 		// creating a channel
 		channel = createChannel();
-
+		
+		// declare Queue
+		declareQueue();
+			
+	}
+	
+	public void declareQueue() throws IOException {
 		/**
 		 * The queueDeclare method call does nothing if the queue already exists,
 		 * otherwise it creates the queue itself.
@@ -67,7 +73,7 @@ public abstract class EndPoint {
 		boolean durable = true; 
 		boolean exclusive = false; 
 		boolean autoDelete = false;
-		channel.queueDeclare(endPointName, durable, exclusive, autoDelete, null);		
+		channel.queueDeclare(endPointName, durable, exclusive, autoDelete, null);	
 	}
 	
 	public Channel createChannel() {

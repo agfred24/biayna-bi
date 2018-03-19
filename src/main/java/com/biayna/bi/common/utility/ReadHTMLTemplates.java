@@ -35,8 +35,8 @@ public class ReadHTMLTemplates {
 				try (BufferedReader reader = Files.newBufferedReader(path, Charset.forName("UTF-8"))) {
 					String line = null;
 					while ((line = reader.readLine()) != null) {
-						if (line.contains("$fileName")) {
-							html.append(line.replace("$fileName", fileName));
+						if (line.contains("$message")) {
+							html.append(line.replace("$message", fileName));
 						} else {
 							html.append(line);
 						}

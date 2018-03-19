@@ -52,7 +52,7 @@ public class MLSHistoryDataConsumer extends EndPoint implements Consumer {
 		if (instance == null) {
 			instance = new MLSHistoryDataConsumer();
 			instance.receiveMessage();
-		}		
+		}
 	}
 
 	/**
