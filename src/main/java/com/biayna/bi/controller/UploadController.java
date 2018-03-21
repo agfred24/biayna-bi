@@ -46,10 +46,11 @@ public class UploadController {
 	public String processFileUpload(@RequestParam("userFile") MultipartFile multipartFile, Model model, HttpServletRequest request) throws IOException, ServletException, TimeoutException, NetworkException{
 		
 		// gets absolute path of the web application
-		String applicationPath = request.getServletContext().getRealPath("");
+		//String applicationPath = request.getServletContext().getRealPath("");
+		String applicationPath = System.getProperty("catalina.home");
 		
 		// constructs path of the directory to save the uploaded file
-		String uploadFilePath = new StringBuilder(applicationPath).append(UPLOAD_DIR).toString();
+		String uploadFilePath = new StringBuilder(applicationPath).append(File.separator).append(UPLOAD_DIR).toString();
 		
 		File fileSaveDir = new File(uploadFilePath);
 		if (!fileSaveDir.exists()) {
