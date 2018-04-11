@@ -19,7 +19,7 @@ import com.biayna.bi.common.utility.ReadHTMLTemplates;
 import com.biayna.bi.common.utility.SystemTime;
 
 
-public class EmailServiceImpl implements EmailService{
+public class EmailSenderImpl implements EmailSender{
 
 	private static Logger logger = LogManager.getLogger();
 

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.biayna.bi.RQDTO.PropertyListingsRQDTO;
 
 @Controller
 public class ActiveListingsController {
@@ -17,7 +16,7 @@ public class ActiveListingsController {
 	@RequestMapping("/listings")
 	public String getListings(Model model){
 		
-		model.addAttribute("listings", PropertyListingsRQDTO.findAll());
+		//model.addAttribute("listings", PropertyListingsRQDTO.findAll());
 		
 		return "listings";
 	}

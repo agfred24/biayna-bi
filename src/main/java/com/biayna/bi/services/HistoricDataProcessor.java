@@ -58,7 +58,7 @@ public class HistoricDataProcessor {
 			ex.printStackTrace();
 		}
 
-		EmailService emailService = new EmailServiceImpl();
+		EmailSender emailService = new EmailSenderImpl();
 		//String emialMessage = emailService.writeEmailMessage("hello");
 		String successMessage = "The uploaded file \"" + fileInfo.getName() + "\" has been processed and data has been stored successfully.";
 		String successSubject = "File has been processed.";
