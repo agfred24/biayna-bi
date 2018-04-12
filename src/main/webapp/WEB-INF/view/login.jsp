@@ -20,7 +20,7 @@
 		
 	%>		
 	
-	<form id="loginForm" action="loginProcess.html" method="post">
+	<form id="loginForm" action="login.html" method="post">
 		<p style="color: red">${error}</p>
 		<table>
 			<tr>
