@@ -15,7 +15,10 @@
 		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response.setHeader("Expires", "0"); // Proxies.
 	%>
-	<p>Hi ${firstName}</p> <a href="logout.html">Sign Out</a>
+	<p>Hi ${firstName}</p> 
+	<br>
+	<p>Hi ${role}</p>
+	<a href="logout.html">Sign Out</a>
 	
 	<h1>Index Page</h1>
 	<a href="upload.html">Upload</a>

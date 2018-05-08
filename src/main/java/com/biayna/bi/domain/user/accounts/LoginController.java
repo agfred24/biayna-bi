@@ -1,7 +1,6 @@
 package com.biayna.bi.domain.user.accounts;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,11 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.biayna.bi.common.utility.ReadConfiguration;
+import com.biayna.bi.domain.user.accounts.PermissionChecker;
 
 
 @Controller
-@RequestMapping(path="/accounts")
-@SessionAttributes({"firstName","authenticated"})
+@RequestMapping(path="/authentication")
+@SessionAttributes({"firstName","authenticated","role"})
 public class LoginController {
 	
 	private static Logger logger = LogManager.getLogger();
@@ -28,9 +28,9 @@ public class LoginController {
 	}
 	
 	@RequestMapping(path="/login", method=RequestMethod.POST)
-	public String handleLogin(@RequestParam("userName") String username, @RequestParam("password") String password, Model model, HttpServletRequest request) {
+	public String handleLogin(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpServletRequest request) {
 		
-		LoginVO credentials = new LoginVO(username, password);
+		LoginVO credentials = new LoginVO(email, password);
 		PermissionChecker validateCredentials = new PermissionCheckerImpl();
 		ReadConfiguration objPropertiesFile = new ReadConfiguration();
 		String loginError = objPropertiesFile.readKey("error.properties", "login.failed");
@@ -43,6 +43,7 @@ public class LoginController {
 		} else {
 			model.addAttribute("firstName", user.getFirstname());	
 			model.addAttribute("authenticated", true);
+			model.addAttribute("role", user.getRole().getRoleName());
 			return "index";			
 		}
 	}

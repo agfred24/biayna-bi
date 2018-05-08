@@ -1,23 +1,52 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
        http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
-     version="2.1">
+	version="2.1">
 
-  <persistence-unit name="biayna_bi">
-    <description> Hibernate JPA Configuration Example</description>
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+	<persistence-unit name="biayna_bi">
+		<description> Hibernate JPA Configuration</description>
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-    <properties>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/biayna_bi" />
-      <property name="javax.persistence.jdbc.user" value="root" />
-      <property name="javax.persistence.jdbc.password" value="password" />
-      <property name="hibernate.show_sql" value="true" />
-      <property name="hibernate.format_sql" value="true" />
-      <property name="hibernate.hbm2ddl.auto" value="update" />
-    </properties>
+		<properties>
+			<!-- Database connection settings -->
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/biayna_bi" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="password" />
 
-  </persistence-unit>
+			<!-- Hibernate properties -->
+			<!-- optional properties -->
+			<!-- toggle hibernate.dialect if using mysql -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			
+			<!-- Echo all executed SQL to stdout = false, Settings in log4j2 overrides this -->
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
+			
+			<property name="hibernate.max_fetch_depth" value="0" />
+			<property name="hibernate.default_batch_fetch_size" value="16" />
+			<property name="hibernate.order_updates" value="true" />
+			<property name="hibernate.generate_statistics" value="false" /><!-- THIS NEED TO BE SET TO FALSE to avoid outOfMemory errors? -->
+			<property name="hibernate.use_sql_comments" value="false" />
+			
+			<!-- jdbc and connection properties -->
+			<property name="hibernate.jdbc.batch_size" value="30" />
+			<property name="hibernate.jdbc.batch_versioned_data" value="true" />
+			
+			<property name="hibernate.id.new_generator_mappings" value="false" />
+			
+			<!-- cache properties -->
+			<!-- <property name="hibernate.cache.use_query_cache" value="true"/> 
+			<property name="hibernate.cache.use_second_level_cache" value="true" /> -->
+			
+			<!-- miscellaneous Properties -->
+			<!-- toggle to either create-drop or only validate -->
+			<!-- <property name="hibernate.hbm2ddl.auto" value="create-drop"/> -->
+			<!-- Validate an existing schema against my mapping -->
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
+		</properties>
+
+	</persistence-unit>
 
 </persistence>

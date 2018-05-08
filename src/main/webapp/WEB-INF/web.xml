@@ -43,4 +43,11 @@
 		<location>/internalServerError.html</location>
 	</error-page>
 	
+	<session-config>
+		<session-timeout>15</session-timeout>
+		<cookie-config>
+			<name>SWID</name>
+		</cookie-config>		
+	</session-config>
+	
 </web-app>

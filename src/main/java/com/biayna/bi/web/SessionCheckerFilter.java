@@ -32,9 +32,10 @@ public class SessionCheckerFilter implements Filter {
         // named "authenticated". If the attribute is not exists redirect
         // user to the login page.
         **/
-        if (!request.getRequestURI().endsWith("login.html") &&
+        if (!request.getRequestURI().endsWith("login.html") && 
+        		!request.getRequestURI().endsWith("registration.html") &&
                 request.getSession().getAttribute("authenticated") == null) {
-            response.sendRedirect(request.getContextPath() + "/accounts/login.html");
+            response.sendRedirect(request.getContextPath() + "/authentication/login.html");
         }
         chain.doFilter(req, res);
     }

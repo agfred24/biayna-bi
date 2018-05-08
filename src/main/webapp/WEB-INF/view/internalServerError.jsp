@@ -11,7 +11,7 @@
 <body>
 
 	<h1>Error Page (Error 500)</h1>
-	<a href="index.html">Home</a>
+	<a href="/biayna-bi/index.html">Home</a>
 
 </body>
 </html>

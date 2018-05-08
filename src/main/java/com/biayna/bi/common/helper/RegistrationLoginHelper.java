@@ -9,65 +9,112 @@ import java.util.Base64;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.biayna.bi.common.utility.ReadConfiguration;
 import com.biayna.bi.common.utility.StringValidator;
 import com.biayna.bi.domain.user.accounts.LoginVO;
+import com.biayna.bi.domain.user.accounts.RegistrationErrors;
 import com.biayna.bi.domain.user.accounts.User;
 import com.biayna.bi.domain.user.accounts.UserVO;
 
 public class RegistrationLoginHelper {
 	
 	private static Logger logger = LogManager.getLogger();
-	
+			
 	// usernames/userids are case insensitive
 	public static boolean isUserCredentialsAcceptable(final LoginVO userCredentials) {
 
 		String email = userCredentials.getEmail().trim();
 		String password = userCredentials.getPassword();
-
+				
+		if (isEmailValid(email) && isPasswordValid(email, password)) {
+			return true;
+		} else {
+			return false;
+		}		
+	}
+	
+	private static boolean isEmailValid(final String email) {
 		if (StringValidator.isEmptyOrNull(email)) {
-			return false;
-		} else if (StringValidator.isEmptyOrNull(password)) {
-			return false;
-		} else if (email.equals(password)) {
-			return false;
-		} else if (!StringValidator.isTenCharactersOrMore(password)) {
-			return false;
-		} else if (!StringValidator.isLessThan128Characters(password)) {
-			return false;
-		} else if (!StringValidator.isPassesWhiteList(password)) {
-			return false;
-		} else if (!StringValidator.isPasswordComplex(password)) {
-			return false;
-		} else if (StringValidator.hasMoreThanTwoConsecutiveIdenticalCharacters(userCredentials.getPassword())) {
 			return false;
 		} else {
 			return true;
 		}
 	}
 	
-	public static boolean isUserRegistrationInformationAcceptable(final UserVO user) {
-
-		LoginVO login = new LoginVO(user.getEmail(), user.getPassword());
-		
-		if (!RegistrationLoginHelper.isUserCredentialsAcceptable(login)) {
-			return false;
-		} else if (StringValidator.isEmptyOrNull(user.getFirstname())){
-			return false;
-		} else {
-			return true;
-		}			
+	private static String validateEmailAddressSyntax (final String email) {
+		ReadConfiguration objPropertiesFile = new ReadConfiguration();
+		String errorMessage = "";
+		if (StringValidator.isEmptyOrNull(email)) {
+			errorMessage = objPropertiesFile.readKey("error.properties", "registration.email.empty");
+		} else if (!StringValidator.isValidEmailAddress(email)) {
+			errorMessage = objPropertiesFile.readKey("error.properties", "registration.email.isNotValid");
+		}		
+		return errorMessage;
 	}
 	
-	public static User getUser(final UserVO userVO) {
-		User userDTO = null;
-		if (userVO != null) {
-			userDTO = new User();
-			userDTO.setEmail(userVO.getEmail());
-			userDTO.setFirstname(userVO.getFirstname());
-			userDTO.setLastname(userVO.getLastname());
-			userDTO.setPhone(userVO.getPhone());
+	private static boolean isPasswordValid (final String email, final String password) {
+		boolean isPassValid = false;
+		if (StringValidator.isEmptyOrNull(password)) {
+			isPassValid = false;
+		} else if (email.equals(password)) {
+			isPassValid = false;
+		} else if (!StringValidator.isTenCharactersOrMore(password)) {
+			isPassValid = false;
+		} else if (!StringValidator.isLessThan128Characters(password)) {
+			isPassValid = false;
+		} else if (!StringValidator.isPassesWhiteList(password)) {
+			isPassValid = false;
+		} else if (!StringValidator.isPasswordComplex(password)) {
+			isPassValid = false;
+		} else if (StringValidator.hasMoreThanTwoConsecutiveIdenticalCharacters(password)) {
+			isPassValid = false;
+		} else {
+			isPassValid = true;
+		}
+		
+		return isPassValid;
+	}
+	
+	public static RegistrationErrors isUserRegistrationInformationAcceptable(final UserVO user) {
+		ReadConfiguration objPropertiesFile = new ReadConfiguration();
+		RegistrationErrors errors = new RegistrationErrors();
+		boolean isRegInfoValid = true;
+		
+		String email = validateEmailAddressSyntax(user.getEmail());
+		if (!StringValidator.isEmptyOrNull(email)) {
+			errors.setEmail(email);
+			isRegInfoValid = false;
+		}
+		if (!isPasswordValid(user.getEmail(), user.getPassword())) {
+			errors.setPassword(objPropertiesFile.readKey("error.properties", "registration.password"));
+			errors.setConfirmPassword(" ");
+			isRegInfoValid = false;
+		}
+		if (!user.getPassword().equals(user.getConfirmPassword())) {
+			errors.setConfirmPassword(objPropertiesFile.readKey("error.properties", "registration.confirmPassword"));
+			if (StringValidator.isEmptyOrNull(errors.getPassword())){
+				errors.setPassword(" ");
+			}
+			isRegInfoValid = false;
+		}
+		if (!(user.getRoleId()>0 && user.getRoleId()<4)){
+			errors.setRole(objPropertiesFile.readKey("error.properties", "registration.role.notSelected"));
+			isRegInfoValid = false;
 		} 
-		return userDTO;
+		if (StringValidator.isEmptyOrNull(user.getFirstName())){
+			errors.setFirstName(objPropertiesFile.readKey("error.properties", "registration.firstName.empty"));
+			isRegInfoValid = false;
+		} 
+		if (StringValidator.isEmptyOrNull(user.getLastName())){
+			errors.setLastName(objPropertiesFile.readKey("error.properties", "registration.lastName.empty"));
+			isRegInfoValid = false;
+		} 
+		
+		if (isRegInfoValid) {
+			return null;
+		} else {
+			return errors;
+		}			
 	}
 	
 	
