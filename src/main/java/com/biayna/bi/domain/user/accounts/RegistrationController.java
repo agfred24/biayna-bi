@@ -19,7 +19,7 @@ import com.biayna.bi.common.utility.StringValidator;
 
 @Controller
 @RequestMapping(path="/authentication")
-@SessionAttributes({"firstName","authenticated"})
+@SessionAttributes({"firstName","authenticated","roleId","roleName"})
 public class RegistrationController {
 	
 	private static Logger logger = LogManager.getLogger();

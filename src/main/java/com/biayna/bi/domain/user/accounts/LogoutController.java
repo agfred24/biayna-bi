@@ -6,25 +6,27 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
+@RequestMapping(path="/authentication")
 public class LogoutController {
 	
 	private static Logger logger = LogManager.getLogger();
-	private static final String UPLOAD_DIR = "uploads";
 	
 	@RequestMapping(path="/logout", method=RequestMethod.GET)
-	public String processFileUpload(HttpServletRequest request) {
+	public String handleLogout(final HttpServletRequest request) {
 		
 			HttpSession session = request.getSession();
-			session.removeAttribute("userName");
+			session.removeAttribute("firstName");
+			session.removeAttribute("authenticated");
+			session.removeAttribute("roleId");
+			session.removeAttribute("roleName");
 			session.invalidate();			
-		
-		return "login";
+				
+			return "logout";
 	}
+
 }
